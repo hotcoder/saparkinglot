@@ -4,7 +4,7 @@
  * Time :4:55 PM
  * Project Name :parkinglot
  */
-package fee;
+package feeprocessor;
 
 import services.FeeCalculatorService;
 import services.FourToTwelveCalculatorService;

@@ -1,6 +1,9 @@
-import driver.ParkingSpot;
+package driver;
+
+import model.ParkingSpot;
 import feeprocessor.FeeStrategy;
 import model.ParkingTicket;
+import model.Receipt;
 import utils.Util;
 import vehicle.Vehicle;
 import vehicle.VehicleType;
@@ -18,14 +21,14 @@ import java.util.Map;
 
 public class ParkingLot {
 
-    private Map<Integer, ParkingSpot> parkingSpotBySpotId;
-    private Map<Integer,ParkingTicket> parkingTickets;
+    private Map<Integer, ParkingSpot> parkingSpotBySpotId = new HashMap<>();
+    private Map<Integer,ParkingTicket> parkingTickets = new HashMap<>();
 
     private FeeStrategy feeStrategy;
 
-    private Map<VehicleType,Integer> totalSpotsByVehicleType;
+    private Map<VehicleType,Integer> totalSpotsByVehicleType = new HashMap<>();
 
-    private Map<VehicleType,Integer> spotsAlloted;
+    private Map<VehicleType,Integer> spotsOccupied = new HashMap<>();
 
     private int counter = 0;
 
@@ -38,9 +41,9 @@ public class ParkingLot {
         totalSpotsByVehicleType.put(VehicleType.CAR_SUV,numberOfCarSpots);
         totalSpotsByVehicleType.put(VehicleType.BUS_TRUCK,numberOfTruckSpots);
 
-        spotsAlloted.put(VehicleType.MOTORCYCLE_SCOOTER,0);
-        spotsAlloted.put(VehicleType.CAR_SUV,0);
-        spotsAlloted.put(VehicleType.BUS_TRUCK,0);
+        spotsOccupied.put(VehicleType.MOTORCYCLE_SCOOTER,0);
+        spotsOccupied.put(VehicleType.CAR_SUV,0);
+        spotsOccupied.put(VehicleType.BUS_TRUCK,0);
 
         this.parkingSpotBySpotId = new HashMap<>();
         this.parkingTickets = new HashMap<>();
@@ -53,8 +56,8 @@ public class ParkingLot {
             return null;
         }
 
-        if(this.spotsAlloted.get(vehicle.vehicleType) == this.totalSpotsByVehicleType.get(vehicle.vehicleType)){
-            System.out.println("No parking space available");
+        if(this.spotsOccupied.get(vehicle.vehicleType) == this.totalSpotsByVehicleType.get(vehicle.vehicleType)){
+            System.out.println("No space available");
             return null;
         }
 
@@ -68,7 +71,7 @@ public class ParkingLot {
         ticket.setAllocatedSpotId(parkingSpot.getParkingSpotId());
         ticket.setEntryTime(parkingSpot.getEntryTime());
 
-        this.spotsAlloted.computeIfPresent(vehicle.vehicleType,(key, val) -> val + 100);
+        this.spotsOccupied.computeIfPresent(vehicle.vehicleType,(key, val) -> val + 1);
         this.parkingTickets.put(ticket.getTicketNumber(),ticket);
 
         return ticket;
@@ -98,11 +101,24 @@ public class ParkingLot {
         double amount = this.feeStrategy.calculateCost(durationInMinutes, parkingSpot.getVehicle().vehicleType);
         receipt.setFee(amount);
         receipt.setNumber(ticketFromDB.getTicketNumber());
-        this.spotsAlloted.computeIfPresent(parkingSpot.getVehicle().vehicleType, (key, val) -> val - 1);
+
+        printReceipt(receipt);
+
+        this.spotsOccupied.computeIfPresent(parkingSpot.getVehicle().vehicleType, (key, val) -> val - 1);
         this.parkingSpotBySpotId.remove(parkingSpot.getParkingSpotId());
         this.parkingTickets.remove(ticketFromDB.getTicketNumber());
         parkingSpot.unPark();
 
         return receipt;
+    }
+
+    private static void printReceipt(Receipt receipt) {
+        System.out.println("*********************************************************");
+        System.out.println("Parking Ticket : ");
+        System.out.println("Receipt Number : "+ receipt.getNumber());
+        System.out.println("Entry Date Time : "+ receipt.getEntryDate());
+        System.out.println("Exit Date Time : "+ receipt.getExitDate());
+        System.out.println("Fee : "+ receipt.getFee());
+        System.out.println("*********************************************************");
     }
 }

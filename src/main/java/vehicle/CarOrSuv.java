@@ -11,13 +11,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Car extends Vehicle{
+public class CarOrSuv extends Vehicle{
 
     private String number;
     private String name;
     private VehicleType vehicleType;
 
-    public Car() {
+    public CarOrSuv() {
         super(VehicleType.CAR_SUV);
         this.number = number;
         this.vehicleType = VehicleType.CAR_SUV;

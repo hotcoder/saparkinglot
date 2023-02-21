@@ -4,11 +4,9 @@
  * Time :5:24 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import vehicle.VehicleType;
-
-import java.util.Date;
 
 public interface FeeCalculatorService {
 

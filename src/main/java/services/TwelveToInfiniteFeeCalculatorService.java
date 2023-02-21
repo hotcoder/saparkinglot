@@ -4,7 +4,7 @@
  * Time :3:26 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import repository.FeeRepository;
 import repository.ParkingInterval;
@@ -22,14 +22,14 @@ public class TwelveToInfiniteFeeCalculatorService implements FeeCalculatorServic
     public double calculate(long durationInMinutes, VehicleType vehicleType) {
         int fee  = 0;
 
-        while (true){
-            if(durationInMinutes >= 60){
-                fee  = FeeRepository.stadiumParkingFeeData.get(vehicleType).get(ParkingInterval.TWELVE_TO_INFINITE);
-                durationInMinutes = durationInMinutes - 60;
-            }else if(durationInMinutes > 0){
-                fee = fee + fee;
-            }else{
+        while (durationInMinutes > 0){
+            if(durationInMinutes < 60){
+                fee  = fee + FeeRepository.stadiumParkingFeeData.get(vehicleType).get(ParkingInterval.TWELVE_TO_INFINITE);
                 break;
+            }
+            if(durationInMinutes >= 60){
+                fee  = fee + FeeRepository.stadiumParkingFeeData.get(vehicleType).get(ParkingInterval.TWELVE_TO_INFINITE);
+                durationInMinutes = durationInMinutes - 60;
             }
         }
         return fee;

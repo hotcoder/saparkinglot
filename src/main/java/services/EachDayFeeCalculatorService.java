@@ -4,10 +4,9 @@
  * Time :4:00 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import repository.FeeRepository;
-import repository.ParkingInterval;
 import vehicle.VehicleType;
 
 import static repository.ParkingInterval.EACHDAY;
@@ -24,6 +23,6 @@ public class EachDayFeeCalculatorService implements FeeCalculatorService {
 
     @Override
     public double calculate(long durationInMinutes, VehicleType vehicleType) {
-        return Math.ceil((durationInMinutes/60)/ 24) * FeeRepository.airportParkingFeeData.get(vehicleType).get(EACHDAY);
+        return Math.ceil((durationInMinutes/60)/ 24.0) * FeeRepository.airportParkingFeeData.get(vehicleType).get(EACHDAY);
     }
 }

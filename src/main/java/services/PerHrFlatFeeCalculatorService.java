@@ -4,7 +4,7 @@
  * Time :5:37 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import repository.FeeRepository;
 import repository.ParkingInterval;
@@ -13,6 +13,8 @@ import vehicle.VehicleType;
 
 public class PerHrFlatFeeCalculatorService implements FeeCalculatorService {
 
+    FeeRepository feeRepository = new FeeRepository();
+
     @Override
     public FeeCalculatorService setNext(FeeCalculatorService feeCalculatorService) {
         return null;
@@ -20,7 +22,18 @@ public class PerHrFlatFeeCalculatorService implements FeeCalculatorService {
 
     @Override
     public double calculate(long durationInMinutes, VehicleType vehicleType) {
-        return (durationInMinutes/60) * FeeRepository.mallParkingFeeData
+        double perHrFee = FeeRepository.mallParkingFeeData
                 .get(vehicleType).get(ParkingInterval.DEFAULT);
+        double fee = 0;
+        while (durationInMinutes > 0){
+            if(durationInMinutes <60) {
+                fee = fee +perHrFee;
+                break;
+            }else if(durationInMinutes >= 60){
+                durationInMinutes = durationInMinutes - 60;
+                fee = fee +perHrFee;
+            }
+        }
+        return fee;
     }
 }

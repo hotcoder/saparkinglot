@@ -4,7 +4,7 @@
  * Time :4:00 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import repository.FeeRepository;
 import repository.ParkingInterval;
@@ -23,7 +23,7 @@ public class EightToTwentyFourFeeCalculatorService implements FeeCalculatorServi
     public double calculate(long durationInMinutes, VehicleType vehicleType) {
         int fee = 0 ;
         if(durationInMinutes > 0){
-            fee  = FeeRepository.airportParkingFeeData.get(vehicleType).get(ParkingInterval.ZERO_TO_ONE);
+            fee  = FeeRepository.airportParkingFeeData.get(vehicleType).get(ParkingInterval.EIGHT_TO_TWENTYFOUR);
         }
         long remainingMinutes = durationInMinutes - (24*60);
         if(remainingMinutes > 0){

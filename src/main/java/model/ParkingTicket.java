@@ -4,15 +4,15 @@
  * Time :1:52 PM
  * Project Name :parkinglot
  */
-package parking;
+package model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 public class ParkingTicket {
 
     private Integer ticketNumber;
@@ -21,5 +21,12 @@ public class ParkingTicket {
     private LocalDateTime entryTime;
     private LocalDateTime vacatedAt;
     private double charges;
+
+    // to simulate time progress
+    public void updateEntryTime(int days ,int hr , int minutes ){
+        this.setEntryTime(this.entryTime.minusDays(days));
+        this.setEntryTime(this.entryTime.minusHours(hr));
+        this.setEntryTime(this.entryTime.minusMinutes(minutes));
+    }
 
 }

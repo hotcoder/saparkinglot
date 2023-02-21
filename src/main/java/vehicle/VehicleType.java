@@ -1,10 +1,7 @@
-package com.gb.parkinglot.model.vehicle;
+package vehicle;
 
 public enum VehicleType {
-    CAR,
-    TRUCK,
-    ELECTRIC,
-    VAN,
-    MOTORBIKE,
-    EBIKE
+    MOTORCYCLE_SCOOTER,
+    CAR_SUV,
+    BUS_TRUCK
 }

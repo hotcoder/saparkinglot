@@ -4,15 +4,11 @@
  * Time :4:57 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import repository.FeeRepository;
 import repository.ParkingInterval;
 import vehicle.VehicleType;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class ZeroToFourFeeCalculatorService implements FeeCalculatorService{
 
@@ -26,10 +22,11 @@ public class ZeroToFourFeeCalculatorService implements FeeCalculatorService{
 
     @Override
     public double calculate(long durationInMinutes, VehicleType vehicleType) {
-        int fee  = FeeRepository.stadiumParkingFeeData.get(vehicleType).get(ParkingInterval.ZERO_TO_FOUR);
-        long remainingMinutes = durationInMinutes - (4*30);
-        if(remainingMinutes > 0){
-            fee += this.feeCalculatorService.calculate(remainingMinutes, vehicleType);
+        double fee  = FeeRepository.stadiumParkingFeeData.get(vehicleType).get(ParkingInterval.ZERO_TO_FOUR);
+        durationInMinutes = durationInMinutes - (4*60);
+        if(durationInMinutes > 0){
+            fee =  fee +
+                    this.feeCalculatorService.calculate(durationInMinutes, vehicleType);
         }
         return fee;
     }

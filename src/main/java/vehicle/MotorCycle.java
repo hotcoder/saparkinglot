@@ -4,5 +4,20 @@
  * Time :10:57 AM
  * Project Name :parkinglot
  */
-package vehicle;public class MotorCycle {
+package vehicle;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class MotorCycle extends Vehicle{
+    private String number;
+    private String name;
+    private VehicleType vehicleType;
+
+    public MotorCycle() {
+        super(VehicleType.MOTORCYCLE_SCOOTER);
+        this.vehicleType = VehicleType.MOTORCYCLE_SCOOTER;
+    }
 }

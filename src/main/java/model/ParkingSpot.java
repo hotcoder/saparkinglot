@@ -4,7 +4,7 @@
  * Time :12:44 PM
  * Project Name :parkinglot
  */
-package driver;
+package model;
 
 import lombok.Getter;
 import lombok.Setter;

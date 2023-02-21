@@ -4,7 +4,7 @@
  * Time :3:37 PM
  * Project Name :parkinglot
  */
-package fee;
+package feeprocessor;
 
 import services.*;
 import vehicle.VehicleType;
@@ -12,14 +12,9 @@ import vehicle.VehicleType;
 public class AirportParkingCalculatorProcessor implements FeeStrategy{
     FeeCalculatorService feeCalculatorService;
 
-    public AirportParkingCalculatorProcessor() {
-        this.feeCalculatorService = new ZeroToFourFeeCalculatorService();
-        this.feeCalculatorService.setNext(new FourToTwelveCalculatorService())
-                .setNext(new TwelveToInfiniteFeeCalculatorService());
-    }
-
 
     public double calculateCost(long durationInMinutes, VehicleType vehicleType) {
+        feeCalculatorService = getFeeCalculatorService(vehicleType);
         return this.feeCalculatorService.calculate(durationInMinutes,vehicleType);
     }
 

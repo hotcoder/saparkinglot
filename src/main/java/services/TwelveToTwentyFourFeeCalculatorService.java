@@ -4,7 +4,7 @@
  * Time :4:01 PM
  * Project Name :parkinglot
  */
-package fee;
+package services;
 
 import repository.FeeRepository;
 import repository.ParkingInterval;

@@ -19,4 +19,5 @@ public class Receipt {
     private Long duration;
     private LocalDateTime entryDate;
     private LocalDateTime exitDate;
+
 }

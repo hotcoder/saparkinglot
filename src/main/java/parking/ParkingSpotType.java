@@ -4,5 +4,12 @@
  * Time :1:05 PM
  * Project Name :parkinglot
  */
-package parking;public class ParkingSpotType {
+package parking;
+
+public enum ParkingSpotType {
+
+    MOTORCYCLE_SCOOTER,
+    CAR_SUV,
+    BUS_TRUCK
+
 }

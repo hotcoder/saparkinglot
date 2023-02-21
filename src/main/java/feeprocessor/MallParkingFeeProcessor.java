@@ -4,7 +4,7 @@
  * Time :5:35 PM
  * Project Name :parkinglot
  */
-package fee;
+package feeprocessor;
 
 import services.*;
 import vehicle.VehicleType;

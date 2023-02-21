@@ -1,4 +1,4 @@
-package fee;
+package feeprocessor;
 
 import vehicle.VehicleType;
 
